@@ -1,12 +1,10 @@
 ExternalProject_Add(avisynth-headers
-    GIT_REPOSITORY https://github.com/AviSynth/AviSynthPlus.git
-    SOURCE_DIR ${SOURCE_LOCATION}
-    GIT_CLONE_FLAGS "--sparse --filter=tree:0"
-    GIT_CLONE_POST_COMMAND "sparse-checkout set --no-cone /* !distrib"
-    GIT_SUBMODULES ""
+    URL https://github.com/AviSynth/AviSynthPlus/archive/1ffeb08c726b2af5448225ad27686248e68f2645.tar.gz
+    URL_HASH SHA256=479dd05e18e42d3c0b53590d7cfb98c84830ac6d9ae1bca94f2bf7cf01f2ecae
+    DOWNLOAD_DIR ${SOURCE_LOCATION}
+    SOURCE_DIR ${SOURCE_LOCATION}/avisynth-headers
     UPDATE_COMMAND ""
-    GIT_RESET 1ffeb08c726b2af5448225ad27686248e68f2645
-    CONFIGURE_COMMAND ${EXEC} CONF=1 cmake -H<SOURCE_DIR> -B<BINARY_DIR>
+    CONFIGURE_COMMAND ${EXEC} CONF=1 cmake -H<SOURCE_DIR>/avisynth-headers -B<BINARY_DIR>
         -G Ninja
         -DCMAKE_BUILD_TYPE=Release
         -DCMAKE_TOOLCHAIN_FILE=${TOOLCHAIN_FILE}
@@ -18,5 +16,4 @@ ExternalProject_Add(avisynth-headers
     INSTALL_COMMAND ${EXEC} ninja -C <BINARY_DIR> install
     LOG_DOWNLOAD 1 LOG_UPDATE 1 LOG_CONFIGURE 1 LOG_BUILD 1 LOG_INSTALL 1
 )
-force_rebuild_git(avisynth-headers)
 cleanup(avisynth-headers install)
